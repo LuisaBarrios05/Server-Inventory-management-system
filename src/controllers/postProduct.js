@@ -8,10 +8,18 @@ import multer from 'multer';
 dotenv.config();
 
 // Configurar Google Cloud Storage
-const storage = new Storage({
-  projectId: process.env.PROJECT_ID_GC,
-  keyFilename: process.env.ACCOUNT_SERVICE_GC
-});
+if (process.env.ENV === 'prod' || process.env.ENV === '') {
+  // En producción, utiliza las credenciales predeterminadas de la aplicación
+  storage = new Storage({
+    projectId: process.env.PROJECT_ID_GC
+  });
+} else {
+  // En desarrollo, utiliza el archivo de clave de servicio
+  storage = new Storage({
+    projectId: process.env.PROJECT_ID_GC,
+    keyFilename: process.env.ACCOUNT_SERVICE_GC
+  });}
+
 const bucketName = process.env.BUCKET_NAME_GC;
 const bucket = storage.bucket(bucketName);
 
