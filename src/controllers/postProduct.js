@@ -6,19 +6,25 @@ import dotenv from 'dotenv';
 import multer from 'multer';
 
 dotenv.config();
-
+const env = process.env.ENV
+console.log(process.env.ENV)
 // Configurar Google Cloud Storage
-if (process.env.ENV === 'prod' || process.env.ENV === '') {
+
+let storage = ''
+
+if (env == 'prod') {
+  console.log('hola')
   // En producción, utiliza las credenciales predeterminadas de la aplicación
-  const storage = new Storage({
+  storage = new Storage({
     projectId: process.env.PROJECT_ID_GC
   });
 } else {
   // En desarrollo, utiliza el archivo de clave de servicio
-  const storage = new Storage({
+  storage = new Storage({
     projectId: process.env.PROJECT_ID_GC,
     keyFilename: process.env.ACCOUNT_SERVICE_GC
-  });}
+  });
+}
 
 const bucketName = process.env.BUCKET_NAME_GC;
 const bucket = storage.bucket(bucketName);
