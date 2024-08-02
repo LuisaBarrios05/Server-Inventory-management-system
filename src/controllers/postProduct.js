@@ -10,12 +10,12 @@ dotenv.config();
 // Configurar Google Cloud Storage
 if (process.env.ENV === 'prod' || process.env.ENV === '') {
   // En producción, utiliza las credenciales predeterminadas de la aplicación
-  storage = new Storage({
+  const storage = new Storage({
     projectId: process.env.PROJECT_ID_GC
   });
 } else {
   // En desarrollo, utiliza el archivo de clave de servicio
-  storage = new Storage({
+  const storage = new Storage({
     projectId: process.env.PROJECT_ID_GC,
     keyFilename: process.env.ACCOUNT_SERVICE_GC
   });}
